@@ -9,6 +9,7 @@ namespace FCVoetbal.Models
 {
     public class Speler
     {
+        public Speler() { }
         public Speler(int id, string voornaam, string achternaam, int doelpunten = 0, int? rugnummer = null)
         {
             ID = id;

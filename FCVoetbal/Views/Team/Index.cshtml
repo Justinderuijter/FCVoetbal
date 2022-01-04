@@ -8,7 +8,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+@if (true || SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
 {
     <p>
         <a asp-action="Create">Create New</a>
@@ -26,11 +26,24 @@
     <tbody>
         @foreach (var item in Model.Items)
         {
-            <tr>
-                <td class="col-md-4">
-                    @item.Naam
+        <tr>
+            <td class="col-md-4">
+                @item.Naam
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+            </td>
+            @if (true || this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
                 </td>
-            </tr>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            }
+        </tr>
+
         }
     </tbody>
 </table>

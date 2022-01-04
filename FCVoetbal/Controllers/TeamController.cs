@@ -1,7 +1,9 @@
 ﻿using FCVoetbal.Data;
 using FCVoetbal.Models;
 using FCVoetbal.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +18,9 @@ namespace FCVoetbal.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<Team> teams = new List<Team>();
-            teams.Add(new Team(1, "KSK Weelde"));
-            teams.Add(new Team(2, "FC Turnhout"));
-            teams.Add(new Team(3, "HIH"));
-
-            return View(new ListViewModel<Team>(teams));
+            return View(new ListViewModel<Team>(await _context.Teams.ToListAsync()));
         }
 
         public IActionResult Create()
@@ -41,12 +38,94 @@ namespace FCVoetbal.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            CreateTeamViewModel vm = new CreateTeamViewModel()
+            TeamViewModel vm = new TeamViewModel()
             {
                 Naam = team.Naam
             };
 
             return View(vm);
+        }
+
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Team team = await _context.Teams.FirstOrDefaultAsync(m => m.ID == id);
+            //var kl = await _context.Klanten.FindAsync(id);
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+
+            return View(new TeamViewModel(team.Naam));
+        }
+
+        //POST: (Localhost)/Klant/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var team = await _context.Teams.FindAsync(id);
+            _context.Teams.Remove(team);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Team team = await _context.Teams.FindAsync(id);
+
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            return View(new TeamViewModel(team.Naam));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id,
+                [Bind("Naam")] Team team)
+        {
+            team.ID = id;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(team);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TeamExists(team.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(new EditTeamViewModel(id, team.Naam));
+        }
+
+        private bool TeamExists(int id)
+        {
+            Team team = _context.Teams.Find(id);
+            return team != null;
         }
     }
 }

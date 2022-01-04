@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace FCVoetbal.ViewModels
 {
-    public class CreateTeamViewModel
+    public class TeamViewModel
     {
+        public TeamViewModel() { }
+        public TeamViewModel(string naam)
+        {
+            Naam = naam;
+        }
+
         public string Naam { get; set; }
     }
 }
