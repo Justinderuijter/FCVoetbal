@@ -8,6 +8,7 @@ namespace FCVoetbal.Models
 {
     public class Team
     {
+        public Team() { }
         public Team(int id, string naam)
         {
             ID = id;
