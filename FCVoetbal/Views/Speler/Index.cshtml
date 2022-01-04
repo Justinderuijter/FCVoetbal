@@ -1,0 +1,43 @@
+﻿@model FCVoetbal.ViewModels.ListViewModel<Speler>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<h1>Spelers</h1>
+<hr/>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class="row">
+    @foreach (var speler in Model.Items)
+    {
+    <div class="col-md-4">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">@speler.VolledigeNaam</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                @if (speler.Team != null)
+                {
+                    <li class="list-group-item">
+                        Team: @speler.Team.Naam
+                    </li>
+                }
+
+                @if (speler.Rugnummer != null)
+                {
+                    <li class="list-group-item">
+                        Rugnummer: @speler.Rugnummer
+                    </li>
+                }
+                <li class="list-group-item">
+                    Nummer: @speler.Doelpunten
+                </li>
+            </ul>
+        </div>
+    </div>
+    }
+</div>
