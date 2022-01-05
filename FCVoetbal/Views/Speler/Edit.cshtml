@@ -1,19 +1,48 @@
-﻿@model FCVoetbal.ViewModels.TeamViewModel
+﻿@model FCVoetbal.ViewModels.EditSpelerViewModel
+
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Speler";
 }
 
 <h1>Edit</h1>
-<h4>Klant</h4>
+
+<h4>Speler</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Naam" class="control-label"></label>
-                <input asp-for="Naam" class="form-control" />
-                <span asp-validation-for="Naam" class="text-danger"></span>
+                <label asp-for="Voornaam" class="control-label"></label>
+                <input asp-for="Voornaam" class="form-control" />
+                <span asp-validation-for="Voornaam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Achternaam" class="control-label"></label>
+                <input asp-for="Achternaam" class="form-control" />
+                <span asp-validation-for="Achternaam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Rugnummer" class="control-label"></label>
+                <input asp-for="Rugnummer" type="number" class="form-control" />
+                <span asp-validation-for="Rugnummer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Doelpunten" class="control-label"></label>
+                <input asp-for="Doelpunten" type="number" class="form-control" />
+                <span asp-validation-for="Doelpunten" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TeamID" class="control-label">Team</label>
+                <select asp-for="TeamID" class="form-control">
+                    <option value="0"></option>
+                    @foreach (var team in Model.TeamsList)
+                    {
+                        <option value="@team.ID">@team.Naam</option>
+                    }
+                </select>
+                <span asp-validation-for="TeamID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
