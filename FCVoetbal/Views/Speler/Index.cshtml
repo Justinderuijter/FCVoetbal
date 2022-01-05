@@ -1,10 +1,14 @@
-﻿@model FCVoetbal.ViewModels.ListViewModel<Speler>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@model FCVoetbal.ViewModels.ListViewModel<Speler>
 
 @{
     ViewData["Title"] = "Home Page";
 }
 <h1>Spelers</h1>
-<hr/>
+<hr />
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,31 +17,37 @@
 <div class="row">
     @foreach (var speler in Model.Items)
     {
-    <div class="col-md-4">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">@speler.VolledigeNaam</h5>
-            </div>
-            <ul class="list-group list-group-flush">
-                @if (speler.Team != null)
-                {
-                    <li class="list-group-item">
-                        Team: @speler.Team.Naam
-                    </li>
-                }
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@speler.VolledigeNaam</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    @if (speler.Team != null)
+                    {
+                        <li class="list-group-item">
+                            Team: @speler.Team.Naam
+                        </li>
+                    }
 
-                @if (speler.Rugnummer != null)
-                {
+                    @if (speler.Rugnummer != null)
+                    {
+                        <li class="list-group-item">
+                            Rugnummer: @speler.Rugnummer
+                        </li>
+                    }
                     <li class="list-group-item">
-                        Rugnummer: @speler.Rugnummer
+                        Nummer: @speler.Doelpunten
                     </li>
-                }
-                <li class="list-group-item">
-                    Nummer: @speler.Doelpunten
-                </li>
-            </ul>
+                    @if (true || this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
+                    {
+                        <li class="list-group-item">
+                            <a asp-action="Edit" asp-route-id="@speler.ID">Edit</a> | <a asp-action="Delete" asp-route-id="@speler.ID">Delete</a>
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
-    </div>
     }
 </div>
