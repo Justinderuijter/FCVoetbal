@@ -14,8 +14,9 @@ namespace FCVoetbal.Models
         public string Plaats { get; set; }
         [Required]
         public DateTime Datum { get; set; }
+        public int TeamID { get; set; }
 
         //nav prop
-        public Team Team { get; set; }
+        public virtual Team Team { get; set; }
     }
 }
