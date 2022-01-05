@@ -2,7 +2,7 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-@model FCVoetbal.ViewModels.ListViewModel<Team>
+@model FCVoetbal.ViewModels.ListViewModel<Training>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -19,7 +19,13 @@
     <thead>
         <tr>
             <th class="col-md-4">
-                @Html.DisplayNameFor(m => m.Items[0].Naam)
+                @Html.DisplayNameFor(m => m.Items[0].Datum)
+            </th>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(m => m.Items[0].Plaats)
+            </th>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(m => m.Items[0].Team)
             </th>
         </tr>
     </thead>
@@ -28,10 +34,13 @@
         {
         <tr>
             <td class="col-md-4">
-                @item.Naam
+                @Html.DisplayFor(modelItem => item.Datum)
             </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+            <td class="col-md-4">
+                @item.Plaats
+            </td>
+            <td class="col-md-4">
+                @item.Team.Naam
             </td>
             @if (true || this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
             {

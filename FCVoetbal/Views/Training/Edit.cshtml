@@ -1,19 +1,35 @@
-﻿@model FCVoetbal.ViewModels.TeamViewModel
+﻿@model FCVoetbal.ViewModels.EditTrainingViewModel
 @{
     ViewData["Title"] = "Edit";
 }
 
 <h1>Edit</h1>
-<h4>Team</h4>
+<h4>Training</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Naam" class="control-label"></label>
-                <input asp-for="Naam" class="form-control" />
-                <span asp-validation-for="Naam" class="text-danger"></span>
+                <label asp-for="Plaats" class="control-label"></label>
+                <input asp-for="Plaats" class="form-control" />
+                <span asp-validation-for="Plaats" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Datum" class="control-label"></label>
+                <input asp-for="Datum" type="date" class="form-control" />
+                <span asp-validation-for="Datum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TeamID" class="control-label">Team</label>
+                <select asp-for="TeamID" class="form-control">
+                    <option value="0"></option>
+                    @foreach (var team in Model.TeamsList)
+                    {
+                        <option value="@team.ID">@team.Naam</option>
+                    }
+                </select>
+                <span asp-validation-for="TeamID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

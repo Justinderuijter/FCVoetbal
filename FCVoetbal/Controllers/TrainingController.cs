@@ -31,6 +31,9 @@ namespace FCVoetbal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Plaats,Datum,TeamID")] Training training)
         {
+            //Kijk of training wel is ingevuld.
+            await ValidateTeam(training.TeamID);
+
             if (ModelState.IsValid)
             {
                 _context.Add(training);
@@ -64,8 +67,8 @@ namespace FCVoetbal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var team = await _context.Teams.FindAsync(id);
-            _context.Teams.Remove(team);
+            Training training = await _context.Trainingen.FindAsync(id);
+            _context.Trainingen.Remove(training);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -93,6 +96,9 @@ namespace FCVoetbal.Controllers
                 [Bind("Plaats,Datum,TeamID")] Training training)
         {
             training.ID = id;
+
+            //Kijk of training wel is ingevuld.
+            await ValidateTeam(training.TeamID);
             if (ModelState.IsValid)
             {
                 try
@@ -121,6 +127,22 @@ namespace FCVoetbal.Controllers
         {
             Training training = _context.Trainingen.Find(id);
             return training != null;
+        }
+
+        private async Task<bool> IsTeamValid(int teamId)
+        {
+            if (teamId <= 0)
+            {
+                return false;
+            }
+            return await _context.Teams.FindAsync(teamId) != null;
+        }
+
+        private async Task ValidateTeam(int teamId)
+        {
+            if (await IsTeamValid(teamId)) return;
+
+            ModelState.AddModelError("TeamID", "Team is een verplicht veld!");
         }
     }
 }

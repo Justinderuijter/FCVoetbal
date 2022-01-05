@@ -12,8 +12,9 @@ namespace FCVoetbal.Models
         public int ID { get; set; }
         [Required]
         public string Plaats { get; set; }
-        [Required]
+        [Required, DataType(DataType.Date)]
         public DateTime Datum { get; set; }
+        [Required]
         public int TeamID { get; set; }
 
         //nav prop
