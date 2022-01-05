@@ -1,0 +1,58 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@model FCVoetbal.ViewModels.ListViewModel<Training>
+
+@{
+    ViewData["Title"] = "Trainingen";
+}
+
+@if (true || SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+<table>
+    <thead>
+        <tr>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(m => m.Items[0].Datum)
+            </th>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(m => m.Items[0].Plaats)
+            </th>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(m => m.Items[0].Team)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+        <tr>
+            <td class="col-md-4">
+                @Html.DisplayFor(modelItem => item.Datum)
+            </td>
+            <td class="col-md-4">
+                @item.Plaats
+            </td>
+            <td class="col-md-4">
+                @item.Team.Naam
+            </td>
+            @if (true || this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            }
+        </tr>
+
+        }
+    </tbody>
+</table>

@@ -1,7 +1,7 @@
-﻿@model FCVoetbal.ViewModels.CreateSpelerViewModel
+﻿@model FCVoetbal.ViewModels.CreateTrainingViewModel
 
 @{
-    ViewData["Title"] = "Create Speler";
+    ViewData["Title"] = "Create Training";
 }
 
 <h1>Create</h1>
@@ -14,24 +14,14 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Voornaam" class="control-label"></label>
-                <input asp-for="Voornaam" class="form-control" />
-                <span asp-validation-for="Voornaam" class="text-danger"></span>
+                <label asp-for="Plaats" class="control-label"></label>
+                <input asp-for="Plaats" class="form-control" />
+                <span asp-validation-for="Plaats" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Achternaam" class="control-label"></label>
-                <input asp-for="Achternaam" class="form-control" />
-                <span asp-validation-for="Achternaam" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rugnummer" class="control-label"></label>
-                <input asp-for="Rugnummer" type="number" class="form-control" />
-                <span asp-validation-for="Rugnummer" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Doelpunten" class="control-label"></label>
-                <input asp-for="Doelpunten" type="number" class="form-control" />
-                <span asp-validation-for="Doelpunten" class="text-danger"></span>
+                <label asp-for="Datum" class="control-label"></label>
+                <input asp-for="Datum" type="date" class="form-control"/>
+                <span asp-validation-for="Datum" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TeamID" class="control-label">Team</label>
