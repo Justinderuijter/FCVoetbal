@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@model FCVoetbal.ViewModels.ListViewModel<Team>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (true || SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+<table>
+    <thead>
+        <tr>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(m => m.Items[0].Naam)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+        <tr>
+            <td class="col-md-4">
+                @item.Naam
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+            </td>
+            @if (true || this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            }
+        </tr>
+
+        }
+    </tbody>
+</table>
