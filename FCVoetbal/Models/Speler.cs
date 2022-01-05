@@ -9,6 +9,7 @@ namespace FCVoetbal.Models
 {
     public class Speler
     {
+        private int? _teamId;
         public Speler() { }
         public Speler(int id, string voornaam, string achternaam, int doelpunten = 0, int? rugnummer = null)
         {
@@ -28,7 +29,21 @@ namespace FCVoetbal.Models
         public int? Rugnummer { get; set; }
         [Required]
         public int Doelpunten { get; set; }
-        public int TeamID { get; set; }
+        public int? TeamID
+        {
+            get => _teamId;
+            set
+            {
+                if (value == 0)
+                {
+                    _teamId = null;
+                }
+                else
+                {
+                    _teamId = value;
+                }
+            }
+        }
 
         //nav prop
         public Team Team { get; set; }

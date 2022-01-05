@@ -9,7 +9,7 @@ namespace FCVoetbal.ViewModels
 {
     public class CreateSpelerViewModel : SpelerViewModel
     {
-        public CreateSpelerViewModel(ICollection<Team> teamOptions, string voornaam = "", string achternaam = "", int? rugnummer = null, int doelpunten = 0, int teamID = 0) : base(voornaam, achternaam, rugnummer, doelpunten, teamID)
+        public CreateSpelerViewModel(ICollection<Team> teamOptions, string voornaam = "", string achternaam = "", int? rugnummer = null, int doelpunten = 0, int? teamID = null) : base(voornaam, achternaam, rugnummer, doelpunten, teamID)
         {
             TeamsList = teamOptions.OrderBy(x => x.Naam).ToList();
         }

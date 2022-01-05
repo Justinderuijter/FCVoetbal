@@ -11,7 +11,7 @@ namespace FCVoetbal.ViewModels
         {
 
         }
-        public SpelerViewModel(string voornaam, string achternaam, int? rugnummer, int doelpunten, int teamID = 0)
+        public SpelerViewModel(string voornaam, string achternaam, int? rugnummer, int doelpunten, int? teamID = null)
         {
             Voornaam = voornaam;
             Achternaam = achternaam;
@@ -23,6 +23,6 @@ namespace FCVoetbal.ViewModels
         public string Achternaam { get; set; }
         public int? Rugnummer { get; set; }
         public int Doelpunten { get; set; }
-        public int TeamID { get; set; }
+        public int? TeamID { get; set; }
     }
 }
