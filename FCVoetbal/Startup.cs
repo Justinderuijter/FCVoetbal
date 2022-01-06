@@ -30,7 +30,23 @@ namespace FCVoetbal
             services.AddDbContext<VoetbalContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("LocalDBConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => 
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+
+
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                options.User.RequireUniqueEmail = true;
+            
+            })
                 .AddEntityFrameworkStores<VoetbalContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();

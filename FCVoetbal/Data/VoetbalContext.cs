@@ -1,4 +1,5 @@
 ﻿using FCVoetbal.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FCVoetbal.Data
 {
-    public class VoetbalContext : DbContext
+    public class VoetbalContext : IdentityDbContext
     {
         public VoetbalContext(DbContextOptions<VoetbalContext> options) : base(options)
         {
@@ -23,6 +24,8 @@ namespace FCVoetbal.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Gebruiker>().ToTable("Gebruiker");
             modelBuilder.Entity<Match>().HasOne(x => x.UitTeam).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<GebruikerMatch>().ToTable("GebruikerMatch");
