@@ -4,14 +4,16 @@ using FCVoetbal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FCVoetbal.Data.Migrations
 {
     [DbContext(typeof(VoetbalContext))]
-    partial class VoetbalContextModelSnapshot : ModelSnapshot
+    [Migration("20220106151918_RemoveGebruiker")]
+    partial class RemoveGebruiker
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,16 +28,10 @@ namespace FCVoetbal.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("GebruikerID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("MatchID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("GebruikerID");
 
                     b.HasIndex("MatchID");
 
@@ -211,10 +207,6 @@ namespace FCVoetbal.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -266,8 +258,6 @@ namespace FCVoetbal.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -354,29 +344,8 @@ namespace FCVoetbal.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("FCVoetbal.Models.Gebruiker", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<string>("Achternaam")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Voornaam")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("Gebruiker");
-                });
-
             modelBuilder.Entity("FCVoetbal.Models.GebruikerMatch", b =>
                 {
-                    b.HasOne("FCVoetbal.Models.Gebruiker", "Gebruiker")
-                        .WithMany("GebruikersMatch")
-                        .HasForeignKey("GebruikerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FCVoetbal.Models.Match", "Match")
                         .WithMany("GebruikerMatches")
                         .HasForeignKey("MatchID")

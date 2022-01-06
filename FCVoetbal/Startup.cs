@@ -1,4 +1,5 @@
 using FCVoetbal.Data;
+using FCVoetbal.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,8 +31,26 @@ namespace FCVoetbal
             services.AddDbContext<VoetbalContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("LocalDBConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<VoetbalContext>();
+
+            services.AddDefaultIdentity<Gebruiker>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+
+
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                options.User.RequireUniqueEmail = true;
+
+            }).AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<VoetbalContext>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
