@@ -2,10 +2,10 @@
 @inject SignInManager<Gebruiker> SignInManager
 @inject UserManager<Gebruiker> UserManager
 
-@model FCVoetbal.ViewModels.ListViewModel<Training>
+@model FCVoetbal.ViewModels.ListViewModel<Match>
 
 @{
-    ViewData["Title"] = "Trainingen";
+    ViewData["Title"] = "Matchen";
 }
 
 @if (true || SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
@@ -25,7 +25,10 @@
                 @Html.DisplayNameFor(m => m.Items[0].Plaats)
             </th>
             <th class="col-md-4">
-                @Html.DisplayNameFor(m => m.Items[0].Team)
+                Teams
+            </th>
+            <th class="col-md-4">
+                Score
             </th>
         </tr>
     </thead>
@@ -40,8 +43,21 @@
                 @item.Plaats
             </td>
             <td class="col-md-4">
-                @item.Team.Naam
+                @item.ThuisTeam.Naam - @item.UitTeam.Naam
             </td>
+            @if (item.ThuisDoelpunten != null && item.UitDoelpunten != null)
+            {
+                <td class="col-md-4">
+                    @item.ThuisDoelpunten - @item.UitDoelpunten
+                </td>
+            }
+            else
+            {
+                <td class="col-md-4">
+                </td>
+            }
+
+
             @if (true || this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
             {
                 <td>

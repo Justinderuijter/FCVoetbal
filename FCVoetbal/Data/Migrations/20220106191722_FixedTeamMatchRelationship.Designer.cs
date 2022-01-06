@@ -4,14 +4,16 @@ using FCVoetbal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FCVoetbal.Data.Migrations
 {
     [DbContext(typeof(VoetbalContext))]
-    partial class VoetbalContextModelSnapshot : ModelSnapshot
+    [Migration("20220106191722_FixedTeamMatchRelationship")]
+    partial class FixedTeamMatchRelationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,44 +39,7 @@ namespace FCVoetbal.Data.Migrations
 
                     b.HasIndex("GebruikerID");
 
-                    b.HasIndex("MatchID");
-
                     b.ToTable("GebruikerMatch");
-                });
-
-            modelBuilder.Entity("FCVoetbal.Models.Match", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Datum")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Plaats")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ThuisDoelpunten")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ThuisTeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UitDoelpunten")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UitTeamId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ThuisTeamId");
-
-                    b.HasIndex("UitTeamId");
-
-                    b.ToTable("Matches");
                 });
 
             modelBuilder.Entity("FCVoetbal.Models.Speler", b =>
@@ -375,27 +340,6 @@ namespace FCVoetbal.Data.Migrations
                         .WithMany("GebruikersMatch")
                         .HasForeignKey("GebruikerID")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FCVoetbal.Models.Match", "Match")
-                        .WithMany("GebruikerMatches")
-                        .HasForeignKey("MatchID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FCVoetbal.Models.Match", b =>
-                {
-                    b.HasOne("FCVoetbal.Models.Team", "ThuisTeam")
-                        .WithMany("ThuisMatchen")
-                        .HasForeignKey("ThuisTeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("FCVoetbal.Models.Team", "UitTeam")
-                        .WithMany("UitMatchen")
-                        .HasForeignKey("UitTeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

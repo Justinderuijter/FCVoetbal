@@ -4,14 +4,16 @@ using FCVoetbal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FCVoetbal.Data.Migrations
 {
     [DbContext(typeof(VoetbalContext))]
-    partial class VoetbalContextModelSnapshot : ModelSnapshot
+    [Migration("20220106204826_FixedTeamMatchRelationshipPart2")]
+    partial class FixedTeamMatchRelationshipPart2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

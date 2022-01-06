@@ -22,5 +22,7 @@ namespace FCVoetbal.Models
         //nav prop
         public ICollection<Training> Trainingen { get; set; }
         public ICollection<Speler> Spelers { get; set; }
+        public ICollection<Match> ThuisMatchen { get; set; }
+        public ICollection<Match> UitMatchen { get; set; }
     }
 }

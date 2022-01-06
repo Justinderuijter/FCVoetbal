@@ -14,6 +14,16 @@
     <Compile Remove="Data\Migrations\20220105185000_DateFormat.Designer.cs" />
     <Compile Remove="Data\Migrations\20220106151236_RemoveGebruiker.cs" />
     <Compile Remove="Data\Migrations\20220106151236_RemoveGebruiker.Designer.cs" />
+    <Compile Remove="Data\Migrations\20220106185224_FixedTeamMatchRelationship.cs" />
+    <Compile Remove="Data\Migrations\20220106185224_FixedTeamMatchRelationship.Designer.cs" />
+    <Compile Remove="Data\Migrations\20220106190700_FixedTeamMatchRelationship.cs" />
+    <Compile Remove="Data\Migrations\20220106190700_FixedTeamMatchRelationship.Designer.cs" />
+    <Compile Remove="Data\Migrations\20220106191949_FixedTeamMatchRelationshipPart2.cs" />
+    <Compile Remove="Data\Migrations\20220106191949_FixedTeamMatchRelationshipPart2.Designer.cs" />
+    <Compile Remove="Data\Migrations\20220106200556_FixedTeamMatchRelationshipPart2.cs" />
+    <Compile Remove="Data\Migrations\20220106200556_FixedTeamMatchRelationshipPart2.Designer.cs" />
+    <Compile Remove="Data\Migrations\20220106204726_FixedTeamMatchRelationshipPart2.cs" />
+    <Compile Remove="Data\Migrations\20220106204726_FixedTeamMatchRelationshipPart2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
