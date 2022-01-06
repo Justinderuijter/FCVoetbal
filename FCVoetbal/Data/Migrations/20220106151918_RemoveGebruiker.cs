@@ -1,13 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 namespace FCVoetbal.Data.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class RemoveGebruiker : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_GebruikerMatch_Gebruiker_GebruikerID",
+                table: "GebruikerMatch");
+
+            migrationBuilder.DropTable(
+                name: "Gebruiker");
+
+            migrationBuilder.DropIndex(
+                name: "IX_GebruikerMatch_GebruikerID",
+                table: "GebruikerMatch");
+
+            migrationBuilder.DropColumn(
+                name: "GebruikerID",
+                table: "GebruikerMatch");
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -52,7 +66,7 @@ namespace FCVoetbal.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +87,7 @@ namespace FCVoetbal.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -215,6 +229,44 @@ namespace FCVoetbal.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.AddColumn<int>(
+                name: "GebruikerID",
+                table: "GebruikerMatch",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.CreateTable(
+                name: "Gebruiker",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Achternaam = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: false),
+                    Telefoon = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Voornaam = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Wachtwoord = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Gebruiker", x => x.ID);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GebruikerMatch_GebruikerID",
+                table: "GebruikerMatch",
+                column: "GebruikerID");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_GebruikerMatch_Gebruiker_GebruikerID",
+                table: "GebruikerMatch",
+                column: "GebruikerID",
+                principalTable: "Gebruiker",
+                principalColumn: "ID",
+                onDelete: ReferentialAction.Cascade);
         }
     }
 }

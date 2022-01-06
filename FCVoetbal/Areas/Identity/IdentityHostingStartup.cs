@@ -15,7 +15,7 @@ namespace FCVoetbal.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<FCVoetbalContext>(options =>
+                services.AddDbContext<VoetbalContext>(options =>
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("LocalDBConnection")));
 

@@ -12,6 +12,8 @@
     <Compile Remove="Data\Migrations\20220105182129_TrainingTeamRequired.Designer.cs" />
     <Compile Remove="Data\Migrations\20220105185000_DateFormat.cs" />
     <Compile Remove="Data\Migrations\20220105185000_DateFormat.Designer.cs" />
+    <Compile Remove="Data\Migrations\20220106151236_RemoveGebruiker.cs" />
+    <Compile Remove="Data\Migrations\20220106151236_RemoveGebruiker.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +26,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Data\" />
   </ItemGroup>
 
 </Project>

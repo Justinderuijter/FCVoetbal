@@ -11,7 +11,7 @@ namespace FCVoetbal.Models
         [Key]
         public int ID { get; set; }
         [Required]
-        public int GebruikerID { get; set; }
+        public string GebruikerID { get; set; }
         [Required]
         public int MatchID { get; set; }
 

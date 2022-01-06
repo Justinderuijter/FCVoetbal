@@ -1,6 +1,7 @@
 ﻿using FCVoetbal.Data;
 using FCVoetbal.Models;
 using FCVoetbal.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;

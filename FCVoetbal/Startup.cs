@@ -1,4 +1,5 @@
 using FCVoetbal.Data;
+using FCVoetbal.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,6 +32,7 @@ namespace FCVoetbal
                 options.UseSqlServer(
                     Configuration.GetConnectionString("LocalDBConnection")));
 
+            services.AddDefaultIdentity<Gebruiker>().AddRoles<IdentityRole>().AddEntityFrameworkStores<VoetbalContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
