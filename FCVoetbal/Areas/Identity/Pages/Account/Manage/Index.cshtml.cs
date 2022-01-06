@@ -33,8 +33,12 @@ namespace FCVoetbal.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Required]
+            public string Voornaam { get; set; }
+            [Required]
+            public string Achternaam { get; set; }
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Telefoon")]
             public string PhoneNumber { get; set; }
         }
 
@@ -47,6 +51,8 @@ namespace FCVoetbal.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                Voornaam = user.Voornaam,
+                Achternaam = user.Achternaam,
                 PhoneNumber = phoneNumber
             };
         }
@@ -87,6 +93,16 @@ namespace FCVoetbal.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+            if (Input.Voornaam != user.Voornaam)
+            {
+                user.Voornaam = Input.Voornaam;
+            }
+            if (Input.Achternaam != user.Achternaam)
+            {
+                user.Achternaam = Input.Achternaam;
+            }
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

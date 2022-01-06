@@ -1,4 +1,5 @@
-﻿@inject SignInManager<IdentityUser> SignInManager
+﻿@using FCVoetbal.Models;
+@inject SignInManager<Gebruiker> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

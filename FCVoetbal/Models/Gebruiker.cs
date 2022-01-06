@@ -13,8 +13,6 @@ namespace FCVoetbal.Models
         public string Voornaam { get; set; }
         [Required, PersonalData]
         public string Achternaam { get; set; }
-        [PersonalData]
-        public string Telefoon { get; set; }
         //nav prop
         public ICollection<GebruikerMatch> GebruikersMatch { get; set; }
     }
