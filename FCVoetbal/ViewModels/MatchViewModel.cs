@@ -45,5 +45,6 @@ namespace FCVoetbal.ViewModels
         public Team UitTeam { get; set; }
         public int? ThuisDoelpunten { get; set; }
         public int? UitDoelpunten { get; set; }
+        public bool Volgend { get; set; }
     }
 }
