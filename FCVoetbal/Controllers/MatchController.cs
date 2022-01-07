@@ -25,12 +25,31 @@ namespace FCVoetbal.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            return View(new ListViewModel<Match>(await _context.Matches.Include(m => m.ThuisTeam).Include(m => m.UitTeam).ToListAsync()));
+            return View(new MatchListViewModel(await _context.Matches.Include(m => m.ThuisTeam).Include(m => m.UitTeam).ToListAsync()));
         }
 
         public async Task<IActionResult> Create()
         {
             return View(new CreateMatchViewModel(await _context.Teams.ToListAsync(), DateTime.Today));
+        }
+
+        public async Task<IActionResult> Search(MatchListViewModel vm)
+        {
+            if (vm.OnlyMine)
+            {
+                List<Match> matches = await _context.GebruikersMatches
+                    .Include(m => m.Match).ThenInclude(m => m.ThuisTeam)
+                    .Include(m => m.Match).ThenInclude(m => m.UitTeam)
+                    .Where(gm => gm.GebruikerID == _userManager.GetUserId(User))
+                    .Select(gm => gm.Match).ToListAsync();
+
+                vm = new MatchListViewModel(matches, vm.OnlyMine);
+            }
+            else
+            {
+                vm = new MatchListViewModel(await FindDefaultMatches(), vm.OnlyMine);
+            }
+            return View("Index", vm);
         }
 
         [HttpPost]
@@ -191,6 +210,11 @@ namespace FCVoetbal.Controllers
         private async Task<GebruikerMatch> FindGebruikerMatch(int matchId, string userId)
         {
             return await _context.GebruikersMatches.Where(x => x.MatchID == matchId && x.GebruikerID == userId).FirstOrDefaultAsync();
+        }
+
+        private async Task<List<Match>> FindDefaultMatches()
+        {
+            return await _context.Matches.Include(m => m.ThuisTeam).Include(m => m.UitTeam).ToListAsync();
         }
     }
 }

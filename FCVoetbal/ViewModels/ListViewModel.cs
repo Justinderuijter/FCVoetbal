@@ -8,6 +8,7 @@ namespace FCVoetbal.ViewModels
 {
     public class ListViewModel<T> where T : class
     {
+        public ListViewModel() { }
         public ListViewModel(List<T> items)
         {
             Items = items;

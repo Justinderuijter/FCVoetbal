@@ -2,12 +2,20 @@
 @inject SignInManager<Gebruiker> SignInManager
 @inject UserManager<Gebruiker> UserManager
 
-@model FCVoetbal.ViewModels.ListViewModel<Match>
+@model FCVoetbal.ViewModels.MatchListViewModel
 
 @{
     ViewData["Title"] = "Matchen";
 }
-
+<form asp-controller="Match" asp-action="Search" method="get">
+    <div class="form-actions">
+        <p>
+            Only show my followed matches:
+            <input asp-for="OnlyMine" type="checkbox"/>
+            <input type="submit" value="Zoeken" class="btn btn-default" />
+        </p>
+    </div>
+</form>
 @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
 {
     <p>

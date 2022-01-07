@@ -65,8 +65,8 @@ namespace FCVoetbal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var team = await _context.Teams.FindAsync(id);
-            _context.Teams.Remove(team);
+            Speler speler = await _context.Spelers.FindAsync(id);
+            _context.Spelers.Remove(speler);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
