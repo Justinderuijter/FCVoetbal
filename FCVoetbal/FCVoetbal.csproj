@@ -30,6 +30,12 @@
     <Compile Remove="Data\Migrations\20220106210501_TeamID.Designer.cs" />
     <Compile Remove="Data\Migrations\20220106210817_TeamID.cs" />
     <Compile Remove="Data\Migrations\20220106210817_TeamID.Designer.cs" />
+    <Compile Remove="Data\Migrations\20220107194157_Cascade.cs" />
+    <Compile Remove="Data\Migrations\20220107194157_Cascade.Designer.cs" />
+    <Compile Remove="Data\Migrations\20220107194431_Cascade.cs" />
+    <Compile Remove="Data\Migrations\20220107194431_Cascade.Designer.cs" />
+    <Compile Remove="Data\Migrations\20220107194546_Cascade.cs" />
+    <Compile Remove="Data\Migrations\20220107194546_Cascade.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

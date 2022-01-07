@@ -27,23 +27,22 @@ namespace FCVoetbal.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<Gebruiker>().ToTable("Gebruiker");
-
             modelBuilder.Entity<Match>().HasKey(p => p.ID);
             modelBuilder.Entity<Match>()
-                .HasOne(m => m.ThuisTeam)
-                .WithMany(m => m.ThuisMatchen)
-                .HasForeignKey(m => m.ThuisTeamId).OnDelete(DeleteBehavior.NoAction);
+            .HasOne(m => m.ThuisTeam)
+            .WithMany(m => m.ThuisMatchen)
+            .HasForeignKey(m => m.ThuisTeamId).OnDelete(DeleteBehavior.SetNull);
             modelBuilder.Entity<Match>()
                 .HasOne(m => m.UitTeam)
                 .WithMany(m => m.UitMatchen)
-                .HasForeignKey(m => m.UitTeamId).OnDelete(DeleteBehavior.NoAction);
+                .HasForeignKey(m => m.UitTeamId).OnDelete(DeleteBehavior.SetNull);
 
-            //modelBuilder.Entity<Match>().HasOne(x => x.UitTeam).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<GebruikerMatch>().ToTable("GebruikerMatch");
             modelBuilder.Entity<Speler>().ToTable("Speler");
+
             modelBuilder.Entity<Team>().HasKey(t => t.ID);
             modelBuilder.Entity<Team>().ToTable("Team");
+
             modelBuilder.Entity<Training>().ToTable("Training");
         }
     }
