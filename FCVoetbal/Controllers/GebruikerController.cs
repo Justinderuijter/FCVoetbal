@@ -21,9 +21,10 @@ namespace FCVoetbal.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(new ListViewModel<Gebruiker>(_userManager.Users.ToList()));
+            List<Gebruiker> gebruikers = await _userManager.Users.Where(u => u.Id != _userManager.GetUserId(User)).ToListAsync();
+            return View(new ListViewModel<Gebruiker>(gebruikers));
         }
 
         public IActionResult Create()

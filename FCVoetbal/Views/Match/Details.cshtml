@@ -11,7 +11,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Datum" class="control-label"></label>
-                : @Model.Datum
+                : @Html.DisplayFor(modelItem => Model.Datum)
                 <span asp-validation-for="Datum" class="text-danger"></span>
             </div>
             <div class="form-group">
