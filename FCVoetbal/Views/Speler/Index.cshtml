@@ -10,9 +10,13 @@
 <h1>Spelers</h1>
 <hr />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
 
 <div class="row">
     @foreach (var speler in Model.Items)
