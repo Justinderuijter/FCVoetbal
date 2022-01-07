@@ -2,6 +2,7 @@
 using FCVoetbal.Models;
 using FCVoetbal.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,11 @@ namespace FCVoetbal.Controllers
     public class MatchController : Controller
     {
         private readonly VoetbalContext _context;
-        public MatchController(VoetbalContext context)
+        private readonly UserManager<Gebruiker> _userManager;
+        public MatchController(VoetbalContext context, UserManager<Gebruiker> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
         public async Task<IActionResult> Index()
         {
@@ -78,6 +81,57 @@ namespace FCVoetbal.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Match match = await _context.Matches.Include(m => m.ThuisTeam).Include(m => m.UitTeam).FirstOrDefaultAsync(m => m.ID == id);
+
+            if (match == null)
+            {
+                return NotFound();
+            }
+
+            MatchViewModel matchViewModel = new MatchViewModel(match.Datum, match.Plaats, match.ThuisTeam, match.UitTeam, match.ThuisDoelpunten, match.UitDoelpunten);
+            if (await FindGebruikerMatch(match.ID, _userManager.GetUserId(User)) != null)
+            {
+                matchViewModel.Volgend = true;
+            }
+
+            return View(matchViewModel);
+        }
+
+        [HttpPost, ActionName("Details")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Follow(int id)
+        {
+            if (!MatchExists(id))
+            {
+                return NotFound();
+            }
+
+            string userId = _userManager.GetUserId(User);
+            GebruikerMatch gebruikerMatch = await FindGebruikerMatch(id, userId);
+            if (gebruikerMatch == null && User.Identity.IsAuthenticated)
+            {
+                gebruikerMatch = new GebruikerMatch()
+                {
+                    MatchID = id,
+                    GebruikerID = userId
+                };
+                _context.GebruikersMatches.Add(gebruikerMatch);
+            }
+            else
+            {
+                _context.GebruikersMatches.Remove(gebruikerMatch);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -129,6 +183,11 @@ namespace FCVoetbal.Controllers
         {
             Match match = _context.Matches.Find(id);
             return match != null;
+        }
+
+        private async Task<GebruikerMatch> FindGebruikerMatch(int matchId, string userId)
+        {
+            return await _context.GebruikersMatches.Where(x => x.MatchID == matchId && x.GebruikerID == userId).FirstOrDefaultAsync();
         }
     }
 }

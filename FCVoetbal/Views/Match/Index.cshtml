@@ -61,6 +61,9 @@
             @if (true || this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
             {
                 <td>
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+                </td>
+                <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
                 </td>
                 <td>

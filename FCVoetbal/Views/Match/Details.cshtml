@@ -1,0 +1,52 @@
+﻿@model FCVoetbal.ViewModels.MatchViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+<h1>Details</h1>
+<h4>Match</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Details">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Datum" class="control-label"></label>
+                : @Model.Datum
+                <span asp-validation-for="Datum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Plaats" class="control-label"></label>
+                : @Model.Plaats
+                <span asp-validation-for="Plaats" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Teams</label>
+                : @Model.ThuisTeam.Naam - @Model.UitTeam.Naam
+            </div>
+            @if (Model.ThuisDoelpunten != null && Model.UitDoelpunten != null)
+            {
+                <div class="form-group">
+                    <label class="control-label">Score</label>
+                    : @Model.ThuisDoelpunten - @Model.UitDoelpunten
+                </div>
+            }
+        <div class="form-group">
+            @if (!Model.Volgend)
+            {
+                <input type="submit" value="Follow" class="btn btn-danger" />
+            }
+            else
+            {
+                <input type="submit" value="Unfollow" class="btn btn-danger" />
+            }
+
+        </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="Index">Back To List</a>
+</div>
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
