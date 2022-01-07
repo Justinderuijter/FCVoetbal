@@ -42,6 +42,7 @@ namespace FCVoetbal.Data
             //modelBuilder.Entity<Match>().HasOne(x => x.UitTeam).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<GebruikerMatch>().ToTable("GebruikerMatch");
             modelBuilder.Entity<Speler>().ToTable("Speler");
+            modelBuilder.Entity<Team>().HasKey(t => t.ID);
             modelBuilder.Entity<Team>().ToTable("Team");
             modelBuilder.Entity<Training>().ToTable("Training");
         }
