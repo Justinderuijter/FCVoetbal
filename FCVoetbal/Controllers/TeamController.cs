@@ -48,7 +48,6 @@ namespace FCVoetbal.Controllers
             return View(vm);
         }
 
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -56,7 +55,6 @@ namespace FCVoetbal.Controllers
                 return NotFound();
             }
             Team team = await _context.Teams.FirstOrDefaultAsync(m => m.ID == id);
-            //var kl = await _context.Klanten.FindAsync(id);
             if (team == null)
             {
                 return NotFound();
@@ -66,7 +64,6 @@ namespace FCVoetbal.Controllers
             return View(new TeamViewModel(team.Naam));
         }
 
-        //POST: (Localhost)/Klant/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

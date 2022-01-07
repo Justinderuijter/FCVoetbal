@@ -72,7 +72,6 @@ namespace FCVoetbal.Controllers
             return View(new MatchViewModel(match.Datum, match.Plaats, match.ThuisTeam, match.UitTeam, match.ThuisDoelpunten, match.UitDoelpunten));
         }
 
-        //POST: (Localhost)/Klant/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
