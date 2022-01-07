@@ -30,9 +30,6 @@
             <td class="col-md-4">
                 @item.Naam
             </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a>
-            </td>
             @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
             {
                 <td>
