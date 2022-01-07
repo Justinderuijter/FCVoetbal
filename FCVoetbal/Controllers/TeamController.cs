@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace FCVoetbal.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TeamController : Controller
     {
         private readonly VoetbalContext _context;
@@ -18,6 +19,7 @@ namespace FCVoetbal.Controllers
         {
             _context = context;
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(new ListViewModel<Team>(await _context.Teams.ToListAsync()));

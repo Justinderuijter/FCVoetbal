@@ -8,9 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FCVoetbal.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class MatchController : Controller
     {
         private readonly VoetbalContext _context;
@@ -20,6 +22,7 @@ namespace FCVoetbal.Controllers
             _context = context;
             _userManager = userManager;
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(new ListViewModel<Match>(await _context.Matches.Include(m => m.ThuisTeam).Include(m => m.UitTeam).ToListAsync()));
@@ -53,7 +56,6 @@ namespace FCVoetbal.Controllers
             return View(vm);
         }
 
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -81,6 +83,7 @@ namespace FCVoetbal.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -132,6 +135,7 @@ namespace FCVoetbal.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)

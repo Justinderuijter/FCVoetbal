@@ -1,6 +1,7 @@
 ﻿using FCVoetbal.Data;
 using FCVoetbal.Models;
 using FCVoetbal.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace FCVoetbal.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TrainingController : Controller
     {
         private readonly VoetbalContext _context;
@@ -17,6 +19,7 @@ namespace FCVoetbal.Controllers
         {
             _context = context;
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(new ListViewModel<Training>(await _context.Trainingen.Include(t => t.Team).ToListAsync()));

@@ -1,6 +1,7 @@
 ﻿using FCVoetbal.Data;
 using FCVoetbal.Models;
 using FCVoetbal.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace FCVoetbal.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SpelerController : Controller
     {
         private readonly VoetbalContext _context;
@@ -18,6 +20,7 @@ namespace FCVoetbal.Controllers
         {
             _context = context;
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(new ListViewModel<Speler>(await _context.Spelers.Include(s => s.Team).ToListAsync()));
@@ -42,7 +45,6 @@ namespace FCVoetbal.Controllers
             return View(new CreateSpelerViewModel(await _context.Teams.ToListAsync(), speler.Voornaam, speler.Achternaam, speler.Rugnummer, speler.Doelpunten, speler.TeamID));
         }
 
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -50,7 +52,6 @@ namespace FCVoetbal.Controllers
                 return NotFound();
             }
             Speler speler = await _context.Spelers.FirstOrDefaultAsync(m => m.ID == id);
-            //var kl = await _context.Klanten.FindAsync(id);
             if (speler == null)
             {
                 return NotFound();
@@ -60,7 +61,6 @@ namespace FCVoetbal.Controllers
             return View(new SpelerViewModel(speler.Voornaam, speler.Achternaam, speler.Rugnummer, speler.Doelpunten, speler.TeamID));
         }
 
-        //POST: (Localhost)/Klant/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
