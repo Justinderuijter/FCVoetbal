@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Gebruiker> SignInManager
+@inject UserManager<Gebruiker> UserManager
+
+@model FCVoetbal.ViewModels.ListViewModel<Gebruiker>
+
+@{
+    ViewData["Title"] = "Gebruikers";
+}
+
+@if (true || SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
+<table>
+    <thead>
+        <tr>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(m => m.Items[0].Email)
+            </th>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(m => m.Items[0].Voornaam)
+            </th>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(m => m.Items[0].Achternaam)
+            </th>
+            <th class="col-md-4">
+                @Html.DisplayNameFor(m => m.Items[0].PhoneNumber)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+        <tr>
+            <td class="col-md-4">
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td class="col-md-4">
+                @item.Voornaam
+            </td>
+            <td class="col-md-4">
+                @item.Achternaam
+            </td>
+            <td class="col-md-4">
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+
+
+            @if (true || this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                </td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            }
+        </tr>
+
+        }
+    </tbody>
+</table>
