@@ -42,7 +42,7 @@
             <td class="col-md-4">
                 @item.Team.Naam
             </td>
-            @if (true || this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
+            @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
             {
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>

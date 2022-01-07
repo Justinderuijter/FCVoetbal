@@ -44,7 +44,7 @@
                     <li class="list-group-item">
                         Nummer: @speler.Doelpunten
                     </li>
-                    @if (true || this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
+                    @if (this.User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
                     {
                         <li class="list-group-item">
                             <a asp-action="Edit" asp-route-id="@speler.ID">Edit</a> | <a asp-action="Delete" asp-route-id="@speler.ID">Delete</a>
