@@ -33,23 +33,12 @@ namespace FCVoetbal.Controllers
         {
             if (ModelState.IsValid)
             {
-                int thuisTeamId = 0;
-                int uitTeamId = 0;
-                if (vm.ThuisTeam != null)
-                {
-                    thuisTeamId = vm.ThuisTeam.ID;
-                }
-                if (vm.UitTeam != null)
-                {
-                    uitTeamId = vm.UitTeam.ID;
-                }
-
                 Match match = new Match()
                 {
                     Plaats = vm.Plaats,
                     Datum = vm.Datum,
-                    ThuisTeamId = thuisTeamId,
-                    UitTeamId = uitTeamId,
+                    ThuisTeamId = vm.ThuisTeamId,
+                    UitTeamId = vm.UitTeamId,
                     ThuisDoelpunten = vm.ThuisDoelpunten,
                     UitDoelpunten = vm.UitDoelpunten
                 };
@@ -83,8 +72,8 @@ namespace FCVoetbal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var team = await _context.Teams.FindAsync(id);
-            _context.Teams.Remove(team);
+            Match match = await _context.Matches.FindAsync(id);
+            _context.Matches.Remove(match);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -96,32 +85,32 @@ namespace FCVoetbal.Controllers
                 return NotFound();
             }
 
-            Speler speler = await _context.Spelers.FindAsync(id);
+            Match match = await _context.Matches.FindAsync(id);
 
-            if (speler == null)
+            if (match == null)
             {
                 return NotFound();
             }
 
-            return View(new EditSpelerViewModel(await _context.Teams.ToListAsync(), speler.ID, speler.Voornaam, speler.Achternaam, speler.Rugnummer, speler.Doelpunten, speler.TeamID));
+            return View(new EditMatchViewModel(await _context.Teams.ToListAsync(), match.ID, match.Datum, match.Plaats, match.ThuisTeam, match.UitTeam, match.ThuisDoelpunten, match.UitDoelpunten));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,
-                [Bind("Voornaam,Achternaam,Rugnummer,Doelpunten,TeamID")] Speler speler)
+                [Bind("ThuisTeamId,UitTeamId,ThuisDoelpunten,UitDoelpunten,Plaats,Datum")] Match match)
         {
-            speler.ID = id;
+            match.ID = id;
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(speler);
+                    _context.Update(match);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MatchExists(speler.ID))
+                    if (!MatchExists(match.ID))
                     {
                         return NotFound();
                     }
@@ -133,7 +122,7 @@ namespace FCVoetbal.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(new EditSpelerViewModel(await _context.Teams.ToListAsync(), speler.ID, speler.Voornaam, speler.Achternaam, speler.Rugnummer, speler.Doelpunten, speler.TeamID));
+            return View(new EditMatchViewModel(await _context.Teams.ToListAsync(), match.ID, match.Datum, match.Plaats, match.ThuisTeam, match.UitTeam, match.ThuisDoelpunten, match.UitDoelpunten));
         }
 
         private bool MatchExists(int id)

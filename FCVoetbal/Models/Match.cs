@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace FCVoetbal.Models
         public int? UitDoelpunten { get; set; }
         [Required]
         public string Plaats { get; set; }
-        [Required]
+        [Required, DataType(DataType.Date)]
         public DateTime Datum { get; set; }
 
         //nav prop
