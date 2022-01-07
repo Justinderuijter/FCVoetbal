@@ -23,7 +23,9 @@ namespace FCVoetbal.Models
         public DateTime Datum { get; set; }
 
         //nav prop
+        [ForeignKey("ThuisTeamId")]
         public Team ThuisTeam { get; set; }
+        [ForeignKey("UitTeamId")]
         public Team UitTeam { get; set; }
         public ICollection<GebruikerMatch> GebruikerMatches { get; set; }
     }

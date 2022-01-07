@@ -389,13 +389,13 @@ namespace FCVoetbal.Data.Migrations
                     b.HasOne("FCVoetbal.Models.Team", "ThuisTeam")
                         .WithMany("ThuisMatchen")
                         .HasForeignKey("ThuisTeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("FCVoetbal.Models.Team", "UitTeam")
                         .WithMany("UitMatchen")
                         .HasForeignKey("UitTeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

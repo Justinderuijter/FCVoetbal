@@ -36,6 +36,8 @@
     <Compile Remove="Data\Migrations\20220107194431_Cascade.Designer.cs" />
     <Compile Remove="Data\Migrations\20220107194546_Cascade.cs" />
     <Compile Remove="Data\Migrations\20220107194546_Cascade.Designer.cs" />
+    <Compile Remove="Data\Migrations\20220107200817_RestrictDelete.cs" />
+    <Compile Remove="Data\Migrations\20220107200817_RestrictDelete.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

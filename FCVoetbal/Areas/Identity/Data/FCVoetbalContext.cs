@@ -31,11 +31,11 @@ namespace FCVoetbal.Data
             modelBuilder.Entity<Match>()
             .HasOne(m => m.ThuisTeam)
             .WithMany(m => m.ThuisMatchen)
-            .HasForeignKey(m => m.ThuisTeamId).OnDelete(DeleteBehavior.SetNull);
+            .HasForeignKey(m => m.ThuisTeamId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Match>()
                 .HasOne(m => m.UitTeam)
                 .WithMany(m => m.UitMatchen)
-                .HasForeignKey(m => m.UitTeamId).OnDelete(DeleteBehavior.SetNull);
+                .HasForeignKey(m => m.UitTeamId).OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<GebruikerMatch>().ToTable("GebruikerMatch");
             modelBuilder.Entity<Speler>().ToTable("Speler");

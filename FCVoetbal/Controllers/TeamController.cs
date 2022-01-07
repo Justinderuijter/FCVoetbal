@@ -71,9 +71,14 @@ namespace FCVoetbal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var team = await _context.Teams.FindAsync(id);
-            _context.Teams.Remove(team);
-            await _context.SaveChangesAsync();
+            var team = await _context.Teams.Include(t => t.UitMatchen).Include(t => t.ThuisMatchen).FirstOrDefaultAsync(m => m.ID == id);
+            if (team != null)
+            {
+                CascadeDelete(team);
+                _context.Teams.Remove(team);
+                await _context.SaveChangesAsync();
+            }
+            
             return RedirectToAction(nameof(Index));
         }
 
@@ -128,6 +133,20 @@ namespace FCVoetbal.Controllers
         {
             Team team = _context.Teams.Find(id);
             return team != null;
+        }
+
+        private void CascadeDelete(Team team)
+        {
+            foreach (var match in team.ThuisMatchen)
+            {
+                _context.Matches.Remove(match);
+
+            }
+            foreach (var match in team.UitMatchen)
+            {
+                _context.Matches.Remove(match);
+
+            }
         }
     }
 }
